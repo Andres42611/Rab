@@ -1,5 +1,5 @@
 # Rab Population Genetics Tool
-Rab is a independently-built matrix-based genomic algorithm able to measure the ratio of derived allele frequencies in two populations through the parsing and extraction of genomic data all through user input via the command line.
+Rab is a independently-built matrix-based Python genomic algorithm able to measure the ratio of derived allele frequencies in two populations through the parsing and extraction of genomic data all through user input via the command line.
 
 The program itself is able to take in a large-scale genomic .vcf files along with separate files outlining the sample IDs in population A and population B and the chromosome + position numbers of sites 1 and 2. The program then computes summations of the derived allelic frequencies in population A versus population B over sites 1 versus sites 2 and plots jackknife and/or bootstrap distributions of the statistical point value based on the output specified by the user.
 
