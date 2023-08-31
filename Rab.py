@@ -12,6 +12,7 @@ import argparse
 import fileinput
 import pandas as pd
 import warnings
+import numpy.linalg as la
 warnings.filterwarnings("ignore", category = RuntimeWarning)
 numpy.warnings.filterwarnings('ignore', category=numpy.VisibleDeprecationWarning)                 
 
@@ -130,22 +131,39 @@ popA, popB = numpy.asarray(popA), numpy.asarray(popB)
 
 
 #OPTIONAL - RECONSTRUCT KINSHIP MATRIX IF INPUT BY USER
-def kin_matrix(idfile, kingfile):
-  ids = []
-  with open(idfile) as f:
-    for line in f:
-      ids.append(line.split('\n')[0])
-  ids.pop(0) #get rid if first row, it is a label
+def kin_matrix(idfile, kingfile, ids_of_interest=None):
+    ids = []
+    with open(idfile) as f:
+        for line in f:
+            ids.append(line.strip())
+    
+    ids.pop(0)  # get rid of first row, it is a label
 
-  kin = numpy.empty((len(ids), len(ids)))
-  with open(kingfile) as f:
-    counter=0
-    for line in f:
-      temp = [float(x.replace('\n', '')) if float(x.replace('\n', '')) > 0 else 0.0 for x in line.split('\t')]
-      kin[counter]=temp
-      counter=counter+1
+    kin = numpy.empty((len(ids), len(ids)))
+    with open(kingfile) as f:
+        counter = 0
+        for line in f:
+            temp = [float(x.strip()) if float(x.strip()) > 0 else 0.0 for x in line.split('\t')]
+            kin[counter] = temp
+            counter += 1
 
-  return ids, kin
+    if not ids_of_interest:
+        return ids, kin
+    
+    #double-check that all ids of interest exist in the idfile
+    id_test = [ind for ind in ids_of_interest if ind in ids]
+    if len(id_test) != len(ids_of_interest):
+        missing_ids = set(ids_of_interest) - set(id_test)
+        print(f"The following individuals from POP file input were not found in KING ID file: {', '.join(missing_ids)}")
+        raise sys.exit()
+
+    # Extracting rows and columns for IDs of interest
+    indices_of_interest = [ids.index(i) for i in ids_of_interest]
+    subset_kin = kin[numpy.ix_(indices_of_interest, indices_of_interest)]
+
+    return ids_of_interest, subset_kin
+
+
 
 # STEP 5 - MAKE ALLELE FREQUENCY ARRAYS FOR POP A AND POP B
 def af_arr(chr_list, subpop, idfile, kingfile):
@@ -153,7 +171,7 @@ def af_arr(chr_list, subpop, idfile, kingfile):
     kintest = idfile and kingfile
     
     if kintest and indicator==1:
-      ids, kin = kin_matrix(idfile, kingfile)
+      ids, kin = kin_matrix(idfile, kingfile, subpop)
       kin_inv = la.inv(kin)
       ones_vector = numpy.ones((kin.shape[0], 1))
       num_sum = kin_inv.sum(axis=0)
@@ -178,7 +196,7 @@ def af_arr(chr_list, subpop, idfile, kingfile):
         p_tild_all_loci = numerator/denominator
         af_arr.append(p_tild_all_loci)
     elif kintest:
-      ids, kin = kin_matrix(idfile, kingfile)
+      ids, kin = kin_matrix(idfile, kingfile, subpop)
       kin_inv = la.inv(kin)
       ones_vector = numpy.ones((kin.shape[0], 1))
       num_sum = kin_inv.sum(axis=0)
@@ -465,41 +483,20 @@ if args.out != 'pv':
         
         plt.show()
 
-
-# STEP 10 - OUTPUT
 if __name__ == '__main__':
-    if args.mag == 'y':
-        print(mag)
+    output_types = {
+        'pv': [pv],
+        'jack': [Jack_fin_st],
+        'boot': [Boot_fin_st],
+        'pvj': [pv, Jack_fin_st],
+        'pvb': [pv, Boot_fin_st],
+        'allg': [Jack_fin_st, Boot_fin_st],
+        'all': [pv, Jack_fin_st, Boot_fin_st]
+    }
     
-    if args.burden == 'y':
-        print(br)
-        
-    if args.out == 'pv':
-        print(pv)
-
-    elif args.out == 'jack':
-        print(Jack_fin_st)
-        
-    elif args.out == 'boot':
-        print(Boot_fin_st)
-        
-    elif args.out == 'pvj':
-        print(pv)
-        print(Jack_fin_st)
-        
-    elif args.out == 'pvb':
-        print(pv)
-        print(Boot_fin_st)
-        
-    elif args.out == 'allg':
-        print(Jack_fin_st)
-        print(Boot_fin_st)
-        
-    elif args.out == 'all':
-        print(pv)
-        print(Jack_fin_st)
-        print(Boot_fin_st)
-        
+    if args.out in output_types:
+        for item in output_types[args.out]:
+            print(item)
     else:
         print("Invalid output type")
         sys.exit()
