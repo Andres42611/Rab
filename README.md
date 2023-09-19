@@ -31,10 +31,10 @@ Rab is integrated with a command-line interface, facilitating seamless interacti
 
 ### Optional Parameters:
 
-* -m, --mag: Logarithmic magnitude of R(A/B) v. R(B/A). Default: 'n'.
-* -f, --per: Percentage removal during jackknife sampling. Default: 20%.
-* -n, --iter: Number of sampling iterations. Default: 99.
-* -c, --conf: Confidence interval for data distribution. Default: 95%.
+* -m, --mag: Logarithmic magnitude of R(A/B) v. R(B/A); Default: 'n'.
+* -f, --per: Percentage removal during jackknife sampling; Default: 20%.
+* -n, --iter: Number of sampling iterations; Default: 99.
+* -c, --conf: Confidence interval for data distribution; Default: 95%.
 * -o, --out: Output type. Options include 'jack', 'boot', 'pv', 'allg', 'pvj', 'pvb', 'all'; Default: 'all'. 
 
   #### Kinship Matrix Inputs:
