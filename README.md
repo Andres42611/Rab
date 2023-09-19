@@ -1,5 +1,5 @@
 # Rab: A Matrix-Based Genomic Ratio Analysis Program
-'Rab' is a robust matrix-based genomic program designed for Python. Its primary function is to compute the ratio of derived allele frequencies between two populations by parsing and extracting data from genomic VCF files, developed by Andres del Castillo, Undergraduate Researcher at the [Szpiech Lab](http://szpiech.com/index.html).
+'Rab' is a robust matrix-based genomic program designed for Python. Its primary function is to compute the ratio of derived allele frequencies between two populations by parsing and extracting data from genomic VCF files. This tool was developed by Andres del Castillo, an Undergraduate Researcher at the [Szpiech Lab](http://szpiech.com/index.html).
 
 ## Description
 Rab is tailored to efficiently process large-scale genomic VCF files, supplemented with data delineating sample IDs for two populations (A & B) as well as chromosome and position numbers for two specific set of sites (1 & 2). The program performs comprehensive computations to derive allelic frequencies in population A relative to population B over the set of sites 1 and 2. Furthermore, Rab provides visualization capabilities, plotting jackknife and/or bootstrap distributions of the statistical point value as per user specifications.
