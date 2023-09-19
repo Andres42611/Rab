@@ -1,3 +1,6 @@
+#Rab Program Source Code
+#Author: Andres del Castillo, UG Researcher, Szpiech Lab, The Pennsylvania State University, 2023
+#Description: Rab is a matrix-based genomic algorithm designed to quantify the ratio of derived allele frequencies between two populations via VCF file parsing
 #!/usr/bin/env python3
 
 import os
