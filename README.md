@@ -9,6 +9,7 @@ This advanced computation is pivotal in contrasting genomic variances between tw
 The underlying formula driving the statistic has its origins in the scientific publication titled, "Supplementary Materials for 'Mountain gorilla genomes reveal the impact of long-term population decline and inbreeding'" by Yali Xue et al., 2015. For an in-depth understanding, the article can be accessed at https://www.science.org/action/downloadSupplement?doi=10.1126%2Fscience.aaa3952&file=xue.sm.pdf.
 
 ## Command Line Arguments:
+Rab is integrated with a command-line interface, facilitating seamless interaction for its users. Below are the arguments to execute the program:
 ### Mandatory Inputs:
 
 * -v, --vcf: Reference genomic VCF file (unzipped).
@@ -25,7 +26,7 @@ The underlying formula driving the statistic has its origins in the scientific p
 * -c, --conf: Confidence interval for data distribution. Default: 95%.
 * -o, --out: Output type. Options include 'jack', 'boot', 'pv', 'allg', 'pvj', 'pvb', 'all'. Default: 'all'. 
 
-  ### Kinship Matrix Inputs:
+  #### Kinship Matrix Inputs:
 
   * -Akm, --Akinmatrix: Path to .king file (kinship matrix for popA).
   * -Bkm, --Bkinmatrix: Path to .king file (kinship matrix for popB).
