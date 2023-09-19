@@ -30,15 +30,6 @@ parser.add_argument('-m', '--mag', type=str, default='n', metavar='LOG_MAG', hel
 parser.add_argument('-f', '--per', type=int, default=20, metavar='PERCENTAGE', help='Percentage to be removed during jackknife sampling [default: 20]')
 parser.add_argument('-n', '--iter', type=int, default=99, metavar='ITERATIONS', help='Number of iterations for sampling [default: 99]')
 parser.add_argument('-c', '--conf', type=int, default=95, metavar='CONFIDENCE', help='Confidence interval for data distribution [default: 95]')
-
-# Kinship matrix arguments
-parser.add_argument('-Akm', '--Akinmatrix', type=str, metavar='POP_A_KIN_MATRIX', help='Path to .king file containing kinship matrix (popA exclusive)')
-parser.add_argument('-Bkm', '--Bkinmatrix', type=str, metavar='POP_B_KIN_MATRIX', help='Path to .king file containing kinship matrix (popB exclusive)')
-parser.add_argument('-Akid', '--Akinid', type=str, metavar='POP_A_KIN_ID', help='Path to .king file containing IDs for kinship matrix (popA exclusive)')
-parser.add_argument('-Bkid', '--Bkinid', type=str, metavar='POP_B_KIN_ID', help='Path to .king file containing IDs for kinship matrix (popB exclusive)')
-
-# Miscellaneous
-parser.add_argument('-br', '--burden', type=str, default='n', metavar='BURDEN', help='Burden ratio [default: n]')
 parser.add_argument('-o', '--out', type=str, default='all', metavar='OUTPUT', help=("Output type (lowercase):" 
                                                                                    "'jack' - jackknife plot," 
                                                                                    "'boot' - bootstrap plot," 
@@ -47,6 +38,12 @@ parser.add_argument('-o', '--out', type=str, default='all', metavar='OUTPUT', he
                                                                                    "'pvj' - point value and jackknife plot,"
                                                                                    "'pvb' - point value and bootstrap plot,"
                                                                                    "'all' - (default) all outputs"))
+
+# Kinship matrix arguments
+parser.add_argument('-Akm', '--Akinmatrix', type=str, metavar='POP_A_KIN_MATRIX', help='Path to .king file containing kinship matrix (popA exclusive)')
+parser.add_argument('-Bkm', '--Bkinmatrix', type=str, metavar='POP_B_KIN_MATRIX', help='Path to .king file containing kinship matrix (popB exclusive)')
+parser.add_argument('-Akid', '--Akinid', type=str, metavar='POP_A_KIN_ID', help='Path to .king file containing IDs for kinship matrix (popA exclusive)')
+parser.add_argument('-Bkid', '--Bkinid', type=str, metavar='POP_B_KIN_ID', help='Path to .king file containing IDs for kinship matrix (popB exclusive)')
 
 args = parser.parse_args()
 
@@ -267,29 +264,14 @@ Baf_s2 = arrgen_todict(popB_af_s2, sites_2_chr, refchrom_dict)
 
 
 # STEP 7 - CALCULATE RATIO POINT-VALUE
-def sum_af(prim_af_sx, sec_af_sx, sites, BR):
+def sum_af(prim_af_sx, sec_af_sx, sites:
     sum_af_RAB = 0
-    if not BR:
-        for j in range(len(sites)):
-            for i in prim_af_sx:
-                if sites[j] in prim_af_sx[i]:
-                    sum_af_RAB = sum_af_RAB + (prim_af_sx[i][(sites[j])] * (1 - sec_af_sx[i][(sites[j])]))
-                else:
-                    continue
+    for j in range(len(sites)):
+      for i in prim_af_sx:
+        if sites[j] in prim_af_sx[i]:
+          sum_af_RAB = sum_af_RAB + (prim_af_sx[i][(sites[j])] * (1 - sec_af_sx[i][(sites[j])]))
         
-        return sum_af_RAB
-    
-    else:
-        sum_af_BR = 0
-        for j in range(len(sites)):
-            for i in prim_af_sx:
-                if sites[j] in prim_af_sx[i]:
-                    sum_af_RAB = sum_af_RAB + (prim_af_sx[i][(sites[j])] * (1 - sec_af_sx[i][(sites[j])]))
-                    sum_af_BR = sum_af_BR + (prim_af_sx[i][(sites[j])])
-                else:
-                    continue
-        
-        return sum_af_RAB, sum_af_BR
+    return sum_af_RAB
 
 def R_AB(sum_X1, sum_X2, sum_Y1, sum_Y2):
     try:
@@ -301,32 +283,13 @@ def R_AB(sum_X1, sum_X2, sum_Y1, sum_Y2):
     except ZeroDivisionError:
         raise SystemExit(ZeroDivisionError)
 
-def B_R(sum_X1, sum_Y1):
-    try:
-        value = (sum_Y1/sum_X1)
-        
-        if pd.isna(value) is False:
-            return value 
-    
-    except ZeroDivisionError:
-        raise SystemExit(ZeroDivisionError)
+sum_A1 = sum_af(Aaf_s1, Baf_s1, sites_1)
+sum_A2 = sum_af(Aaf_s2, Baf_s2, sites_2)
 
-if args.burden == 'y':
-    sum_A1 = sum_af(Aaf_s1, Baf_s1, sites_1, True)
-    sum_A2 = sum_af(Aaf_s2, Baf_s2, sites_2, False)
+sum_B1 = sum_af(Baf_s1, Aaf_s1, sites_1)
+sum_B2 = sum_af(Baf_s2, Aaf_s2, sites_2)
 
-    sum_B1 = sum_af(Baf_s1, Aaf_s1, sites_1, True)
-    sum_B2 = sum_af(Baf_s2, Aaf_s2, sites_2, False)
-    pv = 'The value of R_(A,B) is: ' + str(round(R_AB(sum_A1[0], sum_A2, sum_B1[0], sum_B2), 4))
-    br = 'The value of B_(R) is: ' + str(round(B_R(sum_A1[1], sum_B1[1]), 4))
-else:
-    sum_A1 = sum_af(Aaf_s1, Baf_s1, sites_1, False)
-    sum_A2 = sum_af(Aaf_s2, Baf_s2, sites_2, False)
-
-    sum_B1 = sum_af(Baf_s1, Aaf_s1, sites_1, False)
-    sum_B2 = sum_af(Baf_s2, Aaf_s2, sites_2, False)
-
-    pv = 'The value of R_(A,B) is: ' + str(round(R_AB(sum_A1, sum_A2, sum_B1, sum_B2), 4))
+pv = 'The value of R_(A,B) is: ' + str(round(R_AB(sum_A1, sum_A2, sum_B1, sum_B2), 4))
 
 if args.mag == 'y' or args.out == 'all':
     sum_A1 = sum_af(Aaf_s1, Baf_s1, sites_1, False)
