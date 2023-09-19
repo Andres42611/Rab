@@ -10,9 +10,10 @@ The underlying formula driving the statistic has its origins in the scientific p
 
 ## Prerequisite Libraries:
 * For computation of just the statistic, only argparse, scikit-allele, numpy, and pandas is needed:
-`import os, sys, numpy, allel, argparse, fileinput, pandas as pd, warnings, numpy.linalg as la
+`import os, sys, numpy, allel, argparse, pandas as pd, numpy.linalg as la`
 
-* For visualization of bootstrapping and/or jackknife sampling, the  are needed in addition to the former:
+* For visualization of bootstrapping and/or jackknife sampling, SciPy Stats, Python's Random, and Matplotlib are needed in addition to the former:
+`import matplotlib.pyplot as plt, random, scipy.stats as st; from scipy.stats import norm, t`
   
 
 ## Command Line Arguments:
