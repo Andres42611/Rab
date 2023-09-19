@@ -15,7 +15,7 @@ Moreover, the program has been featured in the research publication "Genomic con
 * For computation of just the statistic, only argparse, scikit-allele, numpy, and pandas is needed:
 `import os, sys, numpy, allel, argparse, pandas as pd, numpy.linalg as la`
 
-* For visualization of bootstrapping and/or jackknife sampling, SciPy Stats, Python's Random, and Matplotlib are needed in addition to the former:
+* For visualization of bootstrapping and/or jackknife sampling, SciPy Stats and Matplotlib are needed in addition to the former:
 `import matplotlib.pyplot as plt, random, scipy.stats as st; from scipy.stats import norm, t`
   
 
