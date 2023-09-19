@@ -3,13 +3,8 @@
 import os
 import sys
 import numpy
-import matplotlib.pyplot as plt
-import random
-import scipy.stats as st
-from scipy.stats import norm, t
 import allel
 import argparse
-import fileinput
 import pandas as pd
 import warnings
 import numpy.linalg as la
@@ -307,6 +302,11 @@ if args.mag == 'y' or args.out == 'all':
 
 # STEP 8 - DATA SAMPLING 
 if args.out != 'pv':
+    import matplotlib.pyplot as plt
+    import random
+    import scipy.stats as st
+    from scipy.stats import norm, t
+  
     def stats(site1_lst, site2_lst, primpop1, secpop1, primpop2, secpop2, F, N, boot):
         lens1 = len(site1_lst)
         lens2 = len(site2_lst)
