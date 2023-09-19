@@ -8,6 +8,13 @@ This advanced computation is pivotal in contrasting genomic variances between tw
 
 The underlying formula driving the statistic has its origins in the scientific publication titled, "Supplementary Materials for 'Mountain gorilla genomes reveal the impact of long-term population decline and inbreeding'" by Yali Xue et al., 2015. For an in-depth understanding, the article can be accessed at https://www.science.org/action/downloadSupplement?doi=10.1126%2Fscience.aaa3952&file=xue.sm.pdf.
 
+## Prerequisite Libraries:
+* For computation of just the statistic, only argparse, scikit-allele, numpy, and pandas is needed:
+`import os, sys, numpy, allel, argparse, fileinput, pandas as pd, warnings, numpy.linalg as la
+
+* For visualization of bootstrapping and/or jackknife sampling, the  are needed in addition to the former:
+  
+
 ## Command Line Arguments:
 Rab is integrated with a command-line interface, facilitating seamless interaction for its users. Below are the arguments to execute the program:
 ### Mandatory Inputs:
