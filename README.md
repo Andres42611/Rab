@@ -1,4 +1,4 @@
-# Rab: A Matrix-Based Genomic Ratio Analysis Program
+# Rab
 'Rab' is a genomic program designed with a primary function of computing the ratio of derived allele frequencies between two populations by parsing and extracting data from genomic VCF files. This tool was developed by Andres del Castillo, an Undergraduate Researcher at the [Szpiech Lab](http://szpiech.com/index.html).
 
 ## Description
