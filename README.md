@@ -31,7 +31,7 @@ Use of the program can be found in the research publication "Genomic consequence
 * -c, --conf: Confidence interval for data distribution; Default: 95%.
 * -o, --out: Output type. Options include 'jack', 'boot', 'pv', 'allg', 'pvj', 'pvb', 'all'; Default: 'all'. 
 
-  #### Kinship Matrix Inputs:
+  #### Kinship Parameters:
 
   * -Akm, --Akinmatrix: Path to .king file (kinship matrix for popA).
   * -Bkm, --Bkinmatrix: Path to .king file (kinship matrix for popB).
