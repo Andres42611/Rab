@@ -1,6 +1,6 @@
 # Rab: Ratio of Mutational Load Between Subpopulations 'a' and 'b'
 ## Synopsis
-'Rab' is a statistical genomic program designed with a primary function of computing the ratio of derived allele frequencies between two populations by parsing and extracting data from genomic VCF files, while also accounting kinship relationships. This tool was developed by Andres del Castillo, an Undergraduate Researcher at the [Szpiech Lab](http://szpiech.com/index.html).
+'Rab' is a statistical genomic program designed with a primary function of computing the ratio of derived allele frequencies between two populations by parsing and extracting data from genomic VCF files, while also accounting kinship relationships using the Best Linear Unbiased Estimaton (BLUE) (McPeek et al. (2004)). This tool was developed by Andres del Castillo, an Undergraduate Researcher at the [Szpiech Lab](http://szpiech.com/index.html).
 
 The underlying formula, named the 'RXY statistic', can be found in the supplementary materials for the research article "Mountain gorilla genomes reveal the impact of long-term population decline and inbreeding'" by Yali Xue et al., 2015, accessesible at [here](https://www.science.org/action/downloadSupplement?doi=10.1126%2Fscience.aaa3952&file=xue.sm.pdf).
 
