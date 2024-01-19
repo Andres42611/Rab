@@ -42,4 +42,4 @@ Use of the program can be found in the research publication "Genomic consequence
 After downloading the RAB-1.0.zip, ensuring the prerequsities are installed and up-to-date, and unzipping in the selected directory, if (for example) we wanted to have a output of the RXY statistic point value and a jackknife sampling plot with a 95% confidence interval of a 20% reduction over 1,000 iterations, while also taking into account kinship relationships, we use the command:<br><br>
 ```./Rab.py -v ./TESTVCF.vcf -1 ./SITES1.txt -2 ./SITES2.txt -A POPA.txt -B POPB.txt -Akm ./AKINSHIP.king -Bkm ./BKINSHIP.king -Akid ./AKINID.king.id -Bkid ./BKINID.king.id -f 20 -n 1000 -c 95 -o pvj```<br><br>
 
-The specifics of these example input files can be found in the zip file.
+The specifics of these example input files can be found in the zip file under the folder 'Example'.
